@@ -2,7 +2,7 @@ from os.path import dirname, join, basename, isfile
 from tqdm import tqdm
 
 from models import SyncNet_color as SyncNet
-from models import Wav2Lip, Wav2Lip_disc_qual
+from models import Wav2Lip_Deeper, Wav2Lip_disc_qual_Deeper
 import audio
 
 import torch
@@ -17,6 +17,8 @@ from glob import glob
 
 import os, random, cv2, argparse
 from hparams import hparams, get_image_list
+
+import wandb
 
 parser = argparse.ArgumentParser(description='Code to train the Wav2Lip model WITH the visual quality discriminator')
 
@@ -112,9 +114,11 @@ class Dataset(object):
 
     def __getitem__(self, idx):
         while 1:
+
             idx = random.randint(0, len(self.all_videos) - 1)
             vidname = self.all_videos[idx]
             img_names = list(glob(join(vidname, '*.jpg')))
+            # print(img_names)
             if len(img_names) <= 3 * syncnet_T:
                 continue
             
@@ -204,15 +208,24 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
     global global_step, global_epoch
     resumed_step = global_step
 
+    #### MINE ####
+    n_steps_per_epoch = len(train_data_loader)
+    print(f"NUM SAMPLE IN TRAIN_SET: {n_steps_per_epoch}")
+
+    checkpoint_interval = n_steps_per_epoch
+    eval_interval = n_steps_per_epoch
+    #### END  ####
+
     while global_epoch < nepochs:
         print('Starting Epoch: {}'.format(global_epoch))
         running_sync_loss, running_l1_loss, disc_loss, running_perceptual_loss = 0., 0., 0., 0.
         running_disc_real_loss, running_disc_fake_loss = 0., 0.
         prog_bar = tqdm(enumerate(train_data_loader))
+        
+
         for step, (x, indiv_mels, mel, gt) in prog_bar:
             disc.train()
             model.train()
-
             x = x.to(device)
             mel = mel.to(device)
             indiv_mels = indiv_mels.to(device)
@@ -282,18 +295,38 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
                 save_checkpoint(disc, disc_optimizer, global_step, checkpoint_dir, global_epoch, prefix='disc_')
 
 
-            if global_step % hparams.eval_interval == 0:
+            if global_step % eval_interval == 0:
                 with torch.no_grad():
                     average_sync_loss = eval_model(test_data_loader, global_step, device, model, disc)
 
-                    if average_sync_loss < .75:
+                    # if average_sync_loss < .75:
+                    if global_epoch == 50:
                         hparams.set_hparam('syncnet_wt', 0.03)
 
-            prog_bar.set_description('L1: {}, Sync: {}, Percep: {} | Fake: {}, Real: {}'.format(running_l1_loss / (step + 1),
-                                                                                        running_sync_loss / (step + 1),
-                                                                                        running_perceptual_loss / (step + 1),
-                                                                                        running_disc_fake_loss / (step + 1),
-                                                                                        running_disc_real_loss / (step + 1)))
+            # prog_bar.set_description('L1: {}, Sync: {}, Percep: {} | Fake: {}, Real: {}'.format(running_l1_loss / (step + 1),
+            #                                                                             running_sync_loss / (step + 1),
+            #                                                                             running_perceptual_loss / (step + 1),
+            #                                                                             running_disc_fake_loss / (step + 1),
+            #                                                                             running_disc_real_loss / (step + 1)))
+
+            #### MINE ####
+            metrics = { 
+                        "train/loss": loss,
+                        "train/l1loss": l1loss,
+                        "train/sync_loss": sync_loss,
+                        "train/running_l1_loss": running_l1_loss / (step + 1),
+                        "train/running_sync_loss": running_sync_loss / (step + 1),
+                        "train/running_perceptual_loss": running_perceptual_loss / (step + 1),
+                        "train/running_disc_fake_loss": running_disc_fake_loss / (step + 1),
+                        "train/running_disc_real_loss": running_disc_real_loss / (step + 1),
+                       "train/epoch": (step + 1 + (n_steps_per_epoch * global_epoch)) / n_steps_per_epoch, 
+                    }
+            
+            # wandb.log(metrics) 
+            if step + 1 < n_steps_per_epoch:
+                # 🐝 Log train metrics to wandb 
+                wandb.log(metrics)
+            #### END ####
 
         global_epoch += 1
 
@@ -348,7 +381,20 @@ def eval_model(test_data_loader, global_step, device, model, disc):
                                                             sum(running_perceptual_loss) / len(running_perceptual_loss),
                                                             sum(running_disc_fake_loss) / len(running_disc_fake_loss),
                                                              sum(running_disc_real_loss) / len(running_disc_real_loss)))
-        return sum(running_sync_loss) / len(running_sync_loss)
+        #### MINE ####
+        val_metrics = {
+            "val/average_l1_loss": sum(running_l1_loss) / len(running_l1_loss),
+            "val/averaged_sync_loss": sum(running_sync_loss) / len(running_sync_loss),
+            "val/averaged_perceptual_loss": sum(running_perceptual_loss) / len(running_perceptual_loss),
+            "val/averaged_disc_fake_loss": sum(running_disc_fake_loss) / len(running_disc_fake_loss),
+            "val/averaged_disc_real_loss": sum(running_disc_real_loss) / len(running_disc_real_loss),
+            }
+        wandb.log({**val_metrics})
+        ##############
+
+        # return sum(running_sync_loss) / len(running_sync_loss)
+        return sum(running_l1_loss) / len(running_l1_loss)
+
 
 
 def save_checkpoint(model, optimizer, step, checkpoint_dir, epoch, prefix=''):
@@ -412,8 +458,8 @@ if __name__ == "__main__":
     device = torch.device("cuda" if use_cuda else "cpu")
 
      # Model
-    model = Wav2Lip().to(device)
-    disc = Wav2Lip_disc_qual().to(device)
+    model = Wav2Lip_Deeper().to(device)
+    disc = Wav2Lip_disc_qual_Deeper().to(device)
 
     print('total trainable params {}'.format(sum(p.numel() for p in model.parameters() if p.requires_grad)))
     print('total DISC trainable params {}'.format(sum(p.numel() for p in disc.parameters() if p.requires_grad)))
@@ -435,6 +481,27 @@ if __name__ == "__main__":
 
     if not os.path.exists(checkpoint_dir):
         os.mkdir(checkpoint_dir)
+    
+
+    """
+    My wandb code
+    """
+    wandb.init(
+        project="HQ_wav2lip_voxceleb2_chunk1",
+        entity="talkingfacegen",
+        config={
+            "nepochs": hparams.nepochs,
+            "checkpoint_interval":hparams.checkpoint_interval,
+            "evalpoint_interval":hparams.eval_interval,
+            "batch_size": hparams.batch_size,
+            "initial_learning_rate": hparams.initial_learning_rate,
+            "lr": 1e-4,
+        })
+    
+    print(wandb.run.name)
+    wandb.run.name = "Deeper_V2-"+wandb.run.name
+    wandb.run.save()
+
 
     # Train!
     train(device, model, disc, train_data_loader, test_data_loader, optimizer, disc_optimizer,

@@ -131,3 +131,7 @@ dmypy.json
 
 # Pytorch models
 .pth
+
+
+# MacOS files
+.DS_Store

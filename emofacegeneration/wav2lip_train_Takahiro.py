@@ -2,7 +2,7 @@ from os.path import dirname, join, basename, isfile
 from tqdm import tqdm
 
 from models import SyncNet_color as SyncNet
-from models import Wav2Lip as Wav2Lip
+from models import Wav2Lip_SPT as Wav2Lip
 import audio
 
 import torch
@@ -120,11 +120,13 @@ class Dataset(object):
          
             img_name = random.choice(img_names)
             wrong_img_name = random.choice(img_names)
+
             while wrong_img_name == img_name:
                 wrong_img_name = random.choice(img_names)
 
             window_fnames = self.get_window(img_name)
             wrong_window_fnames = self.get_window(wrong_img_name)
+
             if window_fnames is None or wrong_window_fnames is None:
                 continue
 
@@ -152,14 +154,25 @@ class Dataset(object):
             indiv_mels = self.get_segmented_mels(orig_mel.copy(), img_name)
             if indiv_mels is None: continue
 
+            # print(f"window length : {len(window)}")
+            # print(f"window length : {window[0].shape}")
+
             window = self.prepare_window(window)
+            
+            # print(f"Prepared window length : {len(window)}")
+            # print(f"Prepared window length : {window[0].shape}")
             y = window.copy()
             window[:, :, window.shape[2]//2:] = 0.
 
+            # print(f"window length : {len(wrong_window)}")
+            # print(f"window length : {wrong_window[0].shape}")
             wrong_window = self.prepare_window(wrong_window)
+            # print(f"Prepared window length : {len(wrong_window)}")
+            # print(f"Prepared window length : {wrong_window[0].shape}")
             x = np.concatenate([window, wrong_window], axis=0)
-
+            # print(f"Numpy : {x.shape}")
             x = torch.FloatTensor(x)
+            # print(f"Tensor: {x.size()}")
             mel = torch.FloatTensor(mel.T).unsqueeze(0)
             indiv_mels = torch.FloatTensor(indiv_mels).unsqueeze(1)
             y = torch.FloatTensor(y)
@@ -402,7 +415,7 @@ if __name__ == "__main__":
     My wandb code
     """
     wandb.init(
-        project="wav2lip_voxceleb2_mini",
+        project="Test_Spam_Ignore",
         entity="talkingfacegen",
         config={
             "nepochs": 1000,

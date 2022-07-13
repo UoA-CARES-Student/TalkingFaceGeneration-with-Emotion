@@ -2,7 +2,7 @@ from os.path import dirname, join, basename, isfile
 from tqdm import tqdm
 
 from models import SyncNet_color as SyncNet
-from models import Wav2Lip_Deeper, Wav2Lip_disc_qual_Deeper
+from models import Wav2Lip_Deeper, Wav2Lip_disc_qual
 import audio
 
 import torch
@@ -300,7 +300,7 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
                     average_sync_loss = eval_model(test_data_loader, global_step, device, model, disc)
 
                     # if average_sync_loss < .75:
-                    if global_epoch == 50:
+                    if global_epoch > 100:
                         hparams.set_hparam('syncnet_wt', 0.03)
 
             # prog_bar.set_description('L1: {}, Sync: {}, Percep: {} | Fake: {}, Real: {}'.format(running_l1_loss / (step + 1),
@@ -459,7 +459,7 @@ if __name__ == "__main__":
 
      # Model
     model = Wav2Lip_Deeper().to(device)
-    disc = Wav2Lip_disc_qual_Deeper().to(device)
+    disc = Wav2Lip_disc_qual().to(device)
 
     print('total trainable params {}'.format(sum(p.numel() for p in model.parameters() if p.requires_grad)))
     print('total DISC trainable params {}'.format(sum(p.numel() for p in disc.parameters() if p.requires_grad)))

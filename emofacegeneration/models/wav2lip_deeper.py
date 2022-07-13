@@ -32,10 +32,15 @@ class Wav2Lip_Deeper(nn.Module):
 
             nn.Sequential(Conv2d(128, 256, kernel_size=3, stride=2, padding=1),       # 6,6
             Conv2d(256, 256, kernel_size=3, stride=1, padding=1, residual=True),
+            Conv2d(256, 256, kernel_size=3, stride=1, padding=1, residual=True),
+            Conv2d(256, 256, kernel_size=3, stride=1, padding=1, residual=True),
             Conv2d(256, 256, kernel_size=3, stride=1, padding=1, residual=True)),
 
             nn.Sequential(Conv2d(256, 512, kernel_size=3, stride=2, padding=1),     # 3,3
-            Conv2d(512, 512, kernel_size=3, stride=1, padding=1, residual=True),),
+            Conv2d(512, 512, kernel_size=3, stride=1, padding=1, residual=True),
+            Conv2d(512, 512, kernel_size=3, stride=1, padding=1, residual=True),
+            Conv2d(512, 512, kernel_size=3, stride=1, padding=1, residual=True),
+            Conv2d(512, 512, kernel_size=3, stride=1, padding=1, residual=True)),
             
             nn.Sequential(Conv2d(512, 512, kernel_size=3, stride=1, padding=0),     # 1, 1
             Conv2d(512, 512, kernel_size=1, stride=1, padding=0)),])

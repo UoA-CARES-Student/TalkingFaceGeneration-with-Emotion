@@ -19,6 +19,8 @@ from hparams import hparams, get_image_list
 
 import wandb
 
+
+
 parser = argparse.ArgumentParser(description='Code to train the Wav2Lip model without the visual quality discriminator')
 
 parser.add_argument("--data_root", help="Root folder of the preprocessed LRS2 dataset", required=True, type=str)

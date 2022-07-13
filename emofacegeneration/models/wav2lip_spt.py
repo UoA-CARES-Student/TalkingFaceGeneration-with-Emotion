@@ -109,10 +109,11 @@ class Wav2Lip_SPT(nn.Module):
 
     # Spatial transformer network forward function
     def stn(self, x):
+        B = x.size(0)
         xs = self.localization(x)
-        xs = xs.view(40, 32*22*22)
+        xs = xs.view(B, 32*22*22)
         theta = self.fc_loc(xs)
-        theta = theta.view(40, 2, 3)
+        theta = theta.view(B, 2, 3)
         grid = F.affine_grid(theta, x.size())
         x = F.grid_sample(x, grid)
         return x

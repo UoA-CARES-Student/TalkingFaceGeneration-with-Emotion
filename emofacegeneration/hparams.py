@@ -94,6 +94,9 @@ hparams = HParams(
 
 	disc_wt=0.07,
 	disc_initial_learning_rate=1e-4,
+    train_emo_idx = 4,
+    emo_wt = 0.00
+    
 )
 
 

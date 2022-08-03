@@ -21,7 +21,7 @@ import wandb
 
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 
 parser = argparse.ArgumentParser(description='Code to train the Wav2Lip model WITH the visual quality discriminator')
@@ -488,7 +488,7 @@ if __name__ == "__main__":
     My wandb code
     """
     wandb.init(
-        project="HQ_wav2lip_voxceleb2_chunk1",
+        project="HQ_wav2lip_voxceleb2_mini",
         entity="talkingfacegen",
         config={
             "nepochs": hparams.nepochs,
@@ -500,7 +500,7 @@ if __name__ == "__main__":
         })
 
     print(wandb.run.name)
-    wandb.run.name = "SPT-V1"+wandb.run.name
+    wandb.run.name = "SPT-V2"+wandb.run.name
     wandb.run.save()
 
 

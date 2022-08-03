@@ -48,5 +48,5 @@ python hq_wav2lip_train.py --data_root / --checkpoint_dir checkpoint_2 --syncnet
 
 
 ### Start from empty discrimnator
-python hq_wav2lip_train.py --data_root / --checkpoint_dir checkpoints/attension_v1_jul_12 --syncnet_checkpoint_path discriminator/lipsync_expert.pth --disc_checkpoint_path discriminator/visual_quality_disc.pth
+python hq_wav2lip_train.py --data_root / --checkpoint_dir checkpoints/attension_v2_jul_18 --syncnet_checkpoint_path discriminator/lipsync_expert.pth --disc_checkpoint_path discriminator/visual_quality_disc.pth
 ```

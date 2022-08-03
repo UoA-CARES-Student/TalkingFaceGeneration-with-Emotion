@@ -16,14 +16,20 @@ class Wav2Lip_SPT(nn.Module):
                 nn.ReLU(True),
                 nn.Conv2d(16, 32, kernel_size=5),
                 nn.MaxPool2d(2, stride=2),
-                nn.ReLU(True)
+                nn.ReLU(True),
+                nn.Conv2d(32, 64, kernel_size=5),
+                nn.MaxPool2d(2, stride=2),
+                nn.ReLU(True),
+                nn.Conv2d(64, 128, kernel_size=5),
+                nn.MaxPool2d(2, stride=2),
+                nn.ReLU(True),
             )
 
         # Regressor for the 3 * 2 affine matrix
         self.fc_loc = nn.Sequential(
-            nn.Linear(32*22*22, 32),
+            nn.Linear(512, 160),
             nn.ReLU(True),
-            nn.Linear(32, 3 * 2)
+            nn.Linear(160, 2 * 3)
         )
         # Initialize the weights/bias with identity transformation
         self.fc_loc[2].weight.data.zero_()
@@ -111,9 +117,9 @@ class Wav2Lip_SPT(nn.Module):
     def stn(self, x):
         B = x.size(0)
         xs = self.localization(x)
-        xs = xs.view(B, 32*22*22)
+        xs = xs.view(-1, 512)
         theta = self.fc_loc(xs)
-        theta = theta.view(B, 2, 3)
+        theta = theta.view(-1, 2, 3)
         grid = F.affine_grid(theta, x.size())
         x = F.grid_sample(x, grid)
         return x
@@ -168,8 +174,7 @@ class Wav2Lip_SPT(nn.Module):
 
         else:
             outputs = x
-        
-        # print(f"output shape {outputs.size()}")
+
         return outputs
 
 class Wav2Lip_disc_qual(nn.Module):

@@ -8,10 +8,10 @@ touch $val_filename
 > $train_filename
 > $val_filename
 
-folders=`find voxceleb_preprocessed_5 -mindepth 2 -maxdepth 2 -type d`
+folders=`find /root/takahiro/mini-preprocessed -mindepth 2 -maxdepth 2 -type d`
 # echo $folders
 
-num_folders=`find voxceleb_preprocessed_5 -mindepth 2 -maxdepth 2 -type d | wc -w`
+num_folders=`find /root/takahiro/mini-preprocessed -mindepth 2 -maxdepth 2 -type d | wc -w`
 
 test_val_ratio=80 #In percentage
 
@@ -24,10 +24,10 @@ for file in $folders; do
 	
 	if ((counter <= test_num)); then
 		echo "Test_sample: filename: ${file} | counter: ${counter}";
-		echo ${file:24} >> $train_filename
+		echo ${file} >> $train_filename
 	else
 		echo "Val_sample:  filename: ${file} | counter: ${counter}";
-		echo ${file:24} >> $val_filename
+		echo ${file} >> $val_filename
 	fi
 done
 

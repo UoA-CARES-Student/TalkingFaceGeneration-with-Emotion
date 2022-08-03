@@ -30,20 +30,17 @@ parser.add_argument("--preprocessed_root", help="Root folder of the preprocessed
 
 
 args = parser.parse_args()
-
+fa = [0]*2
+for id in range(args.ngpu):
+	fa[id] = face_detection.FaceAlignment(face_detection.LandmarksType._2D, flip_input=False, device='cuda:{}'.format(id))
 print(f"NUMBER OF GPUS : {args.ngpu}")
 
 
 
 # fa_0 =face_detection.FaceAlignment(face_detection.LandmarksType._2D, flip_input=False, device='cuda:{}'.format(0))
 
-fa = [0]*2
-for id in range(args.ngpu):
-	fa[id] = face_detection.FaceAlignment(face_detection.LandmarksType._2D, flip_input=False, device='cuda:{}'.format(id))
-print(len(fa))
-print(fa[0])
-# fa = [face_detection.FaceAlignment(face_detection.LandmarksType._2D, flip_input=False, 
-# 									device='cuda:{}'.format(id)) for id in range(args.ngpu)]
+
+
 
 
 template = 'ffmpeg -loglevel panic -y -i {} -strict -2 {}'
@@ -130,9 +127,12 @@ def main(args):
 	print('Started processing for {} with {} GPUs'.format(args.data_root, args.ngpu))
 	print(glob(args.data_root))
 
-	print( path.join(args.data_root, '*/*.mp4'))
-	filelist = glob(path.join(args.data_root, '*/*.mp4'), recursive=True)
-	# print(f"NUMBER OF Video-file to be processed : {len(filelist)}")
+	print( path.join(args.data_root, '**/**.mp4'))
+	filelist = glob(path.join(args.data_root, '**/**.mp4'), recursive=True)
+	print(f"NUMBER OF Video-file to be processed : {len(filelist)}")
+
+	if len(filelist) == 0:
+		return
 
 	jobs = [(vfile, args, i%args.ngpu) for i, vfile in enumerate(filelist)]
 	p = ThreadPoolExecutor(args.ngpu)

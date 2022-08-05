@@ -34,7 +34,7 @@ class Wav2Lip_SPT(nn.Module):
         # Initialize the weights/bias with identity transformation
         self.fc_loc[2].weight.data.zero_()
         self.fc_loc[2].bias.data.copy_(torch.tensor([1, 0, 0, 0, 1, 0], dtype=torch.float))
-
+        
 
 
         self.face_encoder_blocks = nn.ModuleList([
@@ -139,6 +139,8 @@ class Wav2Lip_SPT(nn.Module):
             face_sequences = torch.cat([face_sequences[:, :, i] for i in range(face_sequences.size(2))], dim=0)
             # print(f"After : {audio_sequences.size()}  -- {face_sequences.size()}")
             # After : torch.Size([B, 1, 80, 16])  -- torch.Size([B, 6, 96, 96])
+        else:
+            print("ERROR WILL OCCUR: input_dim_size <= 4")
 
         audio_embedding = self.audio_encoder(audio_sequences) # B, 512, 1, 1
         # print(audio_embedding.size())
@@ -146,6 +148,7 @@ class Wav2Lip_SPT(nn.Module):
         feats = []
         x = face_sequences
 
+        initial = torch.clone(face_sequences[:,3:,:,:])
         x = self.stn(x)
 
         for f in self.face_encoder_blocks:
@@ -167,13 +170,16 @@ class Wav2Lip_SPT(nn.Module):
             feats.pop()
 
         x = self.output_block(x)
-        # print(f"x shape {x.size()}")
+        x = torch.add(x, initial)
+        
         if input_dim_size > 4:
             x = torch.split(x, B, dim=0) # [(B, C, H, W)]
             outputs = torch.stack(x, dim=2) # (B, C, T, H, W)
-
+    
         else:
             outputs = x
+            print("ERROR")
+            raise NotImplementedError
 
         return outputs
 

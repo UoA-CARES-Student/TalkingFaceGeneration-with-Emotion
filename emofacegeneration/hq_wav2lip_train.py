@@ -215,7 +215,7 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
     n_steps_per_epoch = len(train_data_loader)
     print(f"NUM SAMPLE IN TRAIN_SET: {n_steps_per_epoch}")
 
-    checkpoint_interval = n_steps_per_epoch
+    checkpoint_interval = n_steps_per_epoch*10
     eval_interval = n_steps_per_epoch
     #### END  ####
 
@@ -294,7 +294,7 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
             if global_step == 1 or global_step % checkpoint_interval == 0:
                 save_checkpoint(
                     model, optimizer, global_step, checkpoint_dir, global_epoch)
-                save_checkpoint(disc, disc_optimizer, global_step, checkpoint_dir, global_epoch, prefix='disc_')
+                # save_checkpoint(disc, disc_optimizer, global_step, checkpoint_dir, global_epoch, prefix='disc_')
 
 
             if global_step % eval_interval == 0:

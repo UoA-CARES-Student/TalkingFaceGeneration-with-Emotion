@@ -131,3 +131,6 @@ dmypy.json
 
 # Pytorch models
 .pth
+
+#py compiler thing?
+.pyc

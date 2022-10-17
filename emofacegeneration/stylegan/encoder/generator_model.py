@@ -4,7 +4,6 @@ import numpy as np
 import dnnlib.tflib as tflib
 from functools import partial
 
-
 def create_stub(name, batch_size):
     return tf.constant(0, dtype='float32', shape=(batch_size, 0))
 

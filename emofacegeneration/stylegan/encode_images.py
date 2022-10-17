@@ -7,9 +7,9 @@ from PIL import ImageFilter
 import numpy as np
 import dnnlib
 import dnnlib.tflib as tflib
-import config
-from encoder.generator_model import Generator
-from encoder.perceptual_model import PerceptualModel, load_images
+import stylegan.config
+from .encoder.generator_model import Generator
+from .encoder.perceptual_model import PerceptualModel, load_images
 #from tensorflow.keras.models import load_model
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.resnet50 import preprocess_input
@@ -28,7 +28,7 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
-def encode_image(img_dir, gen_img_dir, dlatent_dir):
+def encode_image(img_dir):
 
 
     encoder_dict = {
@@ -38,13 +38,14 @@ def encode_image(img_dir, gen_img_dir, dlatent_dir):
         "data_dir": 'data',
         "model_res": 1024,
         "batch_size": 1,
-        "optimizr": 'ggt'
+        "optimizer": 'ggt'
 
     }
 
     # Masking params
     mask_dict = {
          "mask_dir": '/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/masks',
+         "face_mask": True,
          "load_mask": False,
          "use_grabcut": True,
          "scale_mask": 1.4,
@@ -113,9 +114,10 @@ def encode_image(img_dir, gen_img_dir, dlatent_dir):
     perc_model = None
     if (percep_dict["use_lpips_loss"] > 0.00000001):
         # with dnnlib.util.open_url('https://drive.google.com/uc?id=1N2-m9qszOeVC9Tq77WxsLnuWwOedQiD2', cache_dir=config.cache_dir) as f:
-        with open("/workspace/alan/EmoFaceGeneration/emofacegeneration/stylegan-encoder/weights/vgg16_zhang_perceptual.pkl", "rb") as f:
+        with open("/workspace/alan/EmoFaceGeneration/emofacegeneration/stylegan/weights/vgg16_zhang_perceptual.pkl", "rb") as f:
             perc_model =  pickle.load(f)
-    perceptual_model = PerceptualModel(percep_dict, mask_dict, perc_model=perc_model, batch_size=encoder_dict["batch_size"])
+        print(f"batch size is " + str(encoder_dict["batch_size"]))
+    perceptual_model = PerceptualModel(percep_dict, mask_dict,  batch_size=encoder_dict["batch_size"], perc_model=perc_model)
     perceptual_model.build_perceptual_model(generator, discriminator_network)
 
     ff_model = None
@@ -145,7 +147,7 @@ def encode_image(img_dir, gen_img_dir, dlatent_dir):
         if dlatents is not None:
             generator.set_dlatents(dlatents)
         op = perceptual_model.optimize(generator.dlatent_variable, iterations=percep_dict["iterations"], use_optimizer=encoder_dict["optimizer"])
-        pbar = tqdm(op, leave=False, total=percep["iterations"])
+        pbar = tqdm(op, leave=False, total=percep_dict["iterations"])
         vid_count = 0
         best_loss = None
         best_dlatent = None
@@ -208,3 +210,7 @@ def encode_image(img_dir, gen_img_dir, dlatent_dir):
             np.save(os.path.join(encoder_dict["dlatent_dir"], f'{img_name}.npy'), dlatent)
 
         generator.reset_dlatents()
+
+
+if __name__ == "__main__":
+    encode_image("/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/aligned_img")

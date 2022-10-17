@@ -3,8 +3,8 @@ import sys
 import bz2
 import argparse
 from tensorflow.keras.utils import get_file
-from ffhq_dataset.face_alignment import image_align
-from ffhq_dataset.landmarks_detector import LandmarksDetector
+from .landmarks.face_alignment import image_align
+from .landmarks.landmarks_detector import LandmarksDetector
 import multiprocessing
 
 LANDMARKS_MODEL_URL = 'http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
@@ -15,18 +15,20 @@ def unpack_bz2(src_path):
     dst_path = src_path[:-4]
     with open(dst_path, 'wb') as fp:
         fp.write(data)
+
+    print(dst_path)
     return dst_path
 
 def align_images(path, cond):
-    print(f"condition is {cond}")
-    condition = lower(cond)
-    print(f"image dir is: {image_dir}")
-    aligned_dir = "/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/masks/raw_img/aligned_img"
+    # print(f"condition is {cond}")
+    # condition = lower(cond)
+    # print(f"image dir is: {image_dir}")
+    aligned_dir = "/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/aligned_img"
     output_size = 1024
-    x_scale = 1
-    y_scale = 1
-    em_scale = 0.1
-    use_alpha = False
+    def_x_scale = 1
+    def_y_scale = 1
+    def_em_scale = 0.1
+    def_use_alpha = False
     landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
                                                LANDMARKS_MODEL_URL, cache_subdir='temp'))
 
@@ -38,16 +40,17 @@ def align_images(path, cond):
             print('Aligning %s ...' % img_name)
             try:
                 raw_img_path = os.path.join(image_dir, img_name)
-                fn = face_img_name = '%s_%02d.png' % (os.path.splitext(img_name)[0], 1)
+                fn = face_img_name = '%s.png' % (os.path.splitext(img_name)[0])
                 if os.path.isfile(fn):
                     continue
                 print('Getting landmarks...')
                 for i, face_landmarks in enumerate(landmarks_detector.get_landmarks(raw_img_path), start=1):
                     try:
-                        print('Starting face alignment...')
-                        face_img_name = '%s_%02d.png' % (os.path.splitext(img_name)[0], i)
+                        print('Starting face alignment... DIR')
+                        # face_img_name = '%s_%02d.png' % (os.path.splitext(img_name)[0], i)
+                        face_img_name = '%s.png' % (os.path.splitext(img_name)[0])
                         aligned_face_path = os.path.join(aligned_dir, face_img_name)
-                        image_align(raw_img_path, aligned_face_path, face_landmarks, output_size, x_scale, y_scale, em_scale, use_alpha)
+                        image_align(raw_img_path, aligned_face_path, face_landmarks, output_size=1024, x_scale=1, y_scale=1, em_scale=0.1, alpha=False)
                         print('Wrote result %s' % aligned_face_path)
                     except:
                         print("Exception in face alignment!")
@@ -57,12 +60,12 @@ def align_images(path, cond):
         try:
                 raw_img_path = path
                 img_name = raw_img_path.split("/")
-                fn = face_img_name = '%s_%02d.png' % (os.path.splitext(img_name[-1])[0], 1)
+                fn = face_img_name = '%s.png' % (os.path.splitext(img_name[-1])[0])
                 if os.path.isfile(fn):
                     print('Getting landmarks...')
                     for i, face_landmarks in enumerate(landmarks_detector.get_landmarks(raw_img_path), start=1):
                         try:
-                            print('Starting face alignment...')
+                            print('Starting face alignment... IMAGE')
                             face_img_name = '%s_%02d.png' % (os.path.splitext(img_name)[0], i)
                             aligned_face_path = os.path.join(aligned_dir, face_img_name)
                             image_align(raw_img_path, aligned_face_path, face_landmarks, output_size, x_scale, y_scale, em_scale, use_alpha)

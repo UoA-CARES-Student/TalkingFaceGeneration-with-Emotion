@@ -60,3 +60,10 @@ The result will be saved to `results/result_voice.mp4`
 
 ### Evalutation
 [Evalutation README](../docs/evaluation/)
+
+
+
+## DeepFaceLab
+To use deepfacelab, simply follow the instruction provided below.
+- [Main guide](https://mrdeepfakes.com/forums/thread-guide-deepfacelab-2-0-guide)
+- [Google Colab notebook](https://colab.research.google.com/github/chervonij/DFL-Colab/blob/master/DFL_Colab.ipynb)

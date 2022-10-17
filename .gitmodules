@@ -1,0 +1,3 @@
+[submodule "DeepFaceLab"]
+	path = DeepFaceLab
+	url = https://github.com/iperov/DeepFaceLab.git

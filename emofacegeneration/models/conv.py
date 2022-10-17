@@ -42,3 +42,4 @@ class Conv2dTranspose(nn.Module):
     def forward(self, x):
         out = self.conv_block(x)
         return self.act(out)
+            

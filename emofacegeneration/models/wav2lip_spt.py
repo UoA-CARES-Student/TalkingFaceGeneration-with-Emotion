@@ -111,7 +111,7 @@ class Wav2Lip_SPT(nn.Module):
     def stn(self, x):
         B = x.size(0)
         xs = self.localization(x)
-        xs = xs.view(B, 32*22*22)
+        xs = xs.reshape(B, 32*22*22)
         theta = self.fc_loc(xs)
         theta = theta.view(B, 2, 3)
         grid = F.affine_grid(theta, x.size())

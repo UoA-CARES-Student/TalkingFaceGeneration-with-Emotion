@@ -23,7 +23,7 @@ def align_images(path, cond):
     # print(f"condition is {cond}")
     # condition = lower(cond)
     # print(f"image dir is: {image_dir}")
-    aligned_dir = "/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/aligned_img"
+    aligned_dir = "./faces/aligned_img"
     output_size = 1024
     def_x_scale = 1
     def_y_scale = 1

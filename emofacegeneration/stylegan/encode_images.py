@@ -33,8 +33,8 @@ def encode_image(img_dir):
 
     encoder_dict = {
         "src_dir": img_dir,
-        "generated_images_dir": '/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/generated_img',
-        "dlatent_dir": '/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/latent_rep',
+        "generated_images_dir": './faces/generated_img',
+        "dlatent_dir": './faces/latent_rep',
         "data_dir": 'data',
         "model_res": 1024,
         "batch_size": 1,
@@ -44,7 +44,7 @@ def encode_image(img_dir):
 
     # Masking params
     mask_dict = {
-         "mask_dir": '/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/masks',
+         "mask_dir": './faces/masks',
          "face_mask": True,
          "load_mask": False,
          "use_grabcut": True,
@@ -105,7 +105,7 @@ def encode_image(img_dir):
 
     # Initialize generator and perceptual model
     tflib.init_tf()
-    with open("/workspace/alan/image_expr_mod/stylegan-encoder/weights/karras2019stylegan-ffhq-1024x1024.pkl", "rb") as f:
+    with open("./stylegan/weights/karras2019stylegan-ffhq-1024x1024.pkl", "rb") as f:
         print(f"f is: {f}")
         generator_network, discriminator_network, Gs_network = pickle.load(f)
 
@@ -114,7 +114,7 @@ def encode_image(img_dir):
     perc_model = None
     if (percep_dict["use_lpips_loss"] > 0.00000001):
         # with dnnlib.util.open_url('https://drive.google.com/uc?id=1N2-m9qszOeVC9Tq77WxsLnuWwOedQiD2', cache_dir=config.cache_dir) as f:
-        with open("/workspace/alan/EmoFaceGeneration/emofacegeneration/stylegan/weights/vgg16_zhang_perceptual.pkl", "rb") as f:
+        with open("./stylegan/weights/vgg16_zhang_perceptual.pkl", "rb") as f:
             perc_model =  pickle.load(f)
         print(f"batch size is " + str(encoder_dict["batch_size"]))
     perceptual_model = PerceptualModel(percep_dict, mask_dict,  batch_size=encoder_dict["batch_size"], perc_model=perc_model)
@@ -210,7 +210,3 @@ def encode_image(img_dir):
             np.save(os.path.join(encoder_dict["dlatent_dir"], f'{img_name}.npy'), dlatent)
 
         generator.reset_dlatents()
-
-
-if __name__ == "__main__":
-    encode_image("/workspace/alan/EmoFaceGeneration/emofacegeneration/faces/aligned_img")

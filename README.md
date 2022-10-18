@@ -11,11 +11,12 @@ This repository contains the pytorch implementation emotional talking face gener
 - ffmpeg: `sudo apt-get install ffmpeg`
 - Install necessary packages using `pip install -r requirements.txt`.
 - In addition, for styleGAN, run download these packages in this order:
+<br/>
 pip install tensorflow-gpu
-pip install tensorflow[horovod]
+<br/>
+pip install tensorflow[horovod] 
+<br/>
 pip install tensorboard==2.10.0
-Wav2Lip
-- Face detection [pre-trained model](https://www.adrianbulat.com/downloads/python-fan/s3fd-619a316812.pth) should be downloaded to `face_detection/detection/sfd/s3fd.pth`. 
 
 
 ### Repository structure

@@ -5,6 +5,8 @@ Adopting the [Wav2Lip](https://github.com/Rudrabha/Wav2Lip) model, the addition 
 
 [Demo Colab notebook](https://colab.research.google.com/drive/1cvd_ZUBClHlsEx-9szI_zTqqKyHhQMzb?authuser=1#scrollTo=ryz7w34vUAOE)
 
+- Face detection [pre-trained model](https://www.adrianbulat.com/downloads/python-fan/s3fd-619a316812.pth) should be downloaded to `face_detection/detection/sfd/s3fd.pth`. 
+
 ### Setting up the dataset
 Our model was trained using [VoxCeleb2](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/vox2.html) dataset. 
 
@@ -69,7 +71,7 @@ To use deepfacelab, simply follow the instruction provided below.
     (Specifically, I used scripts found in [DeepFaceLab_Linux](https://github.com/nagadit/DeepFaceLab_Linux) repository.)
 - [Google Colab notebook](https://colab.research.google.com/github/chervonij/DFL-Colab/blob/master/DFL_Colab.ipynb)
 
-##StyleGAN emotion modifier
+## StyleGAN emotion modifier
 First to download the required dependencies, run these commands in the following order:
 <br/>
 pip install tensorflow-gpu
@@ -83,10 +85,16 @@ https://stackoverflow.com/questions/73215696/did-colab-suspend-tensorflow-1-x
 In addition, it is no longer aviable on PyPi.
 
 Then, please download the following weights:
+<br/>
 https://drive.google.com/uc?id=1N2-m9qszOeVC9Tq77WxsLnuWwOedQiD2
+<br/>
 https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ
+<br/>
 Place these weights into "stylegan/weights"
-Into TalkingfaceGen
+<br/>
+Then download the finetuned resnet weight from pbaylies listed below: https://drive.google.com/file/d/1EhaXKv2deh1l_R9mh1uebVyKkRvSXH3r/view
+<br/>
+Into "stylegan/data"
 To modifiy images, first encode the images into lantent space, provide the directory of the target photo(s)
 ```bash
 python image_encoder --src_dir [PATH_TO_DIR]

@@ -47,7 +47,7 @@ dataset
 ### Training script
 You can either train the model without the additional visual quality disriminator (< 1 day of training) or use the discriminator (~2 days). For the former, run: 
 ```bash
-hq_wav2lip_train.py --data_root dataset/ --checkpoint_dir  <folder_to_save_checkpoints> --syncnet_checkpoint_path <path_to_expert_disc_checkpoint> --disc_checkpoint_path <path_to_perceptual_disc_checkpoint>
+python3 train.py --data_root dataset/ --checkpoint_dir  <folder_to_save_checkpoints> --syncnet_checkpoint_path <path_to_expert_disc_checkpoint> --disc_checkpoint_path <path_to_perceptual_disc_checkpoint>
 ```
 
 
@@ -66,4 +66,5 @@ The result will be saved to `results/result_voice.mp4`
 ## DeepFaceLab
 To use deepfacelab, simply follow the instruction provided below.
 - [Main guide](https://mrdeepfakes.com/forums/thread-guide-deepfacelab-2-0-guide)
+    (Specifically, I used scripts found in [DeepFaceLab_Linux](https://github.com/nagadit/DeepFaceLab_Linux) repository.)
 - [Google Colab notebook](https://colab.research.google.com/github/chervonij/DFL-Colab/blob/master/DFL_Colab.ipynb)

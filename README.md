@@ -3,7 +3,7 @@
 
 
 ### Introduction
-This repository contains the pytorch implementation emotional talking face generation prefesented in paper :[Talking Face Generation](https://github.com/UoA-CARES-Student/EmoFaceGeneration).
+This repository contains the pytorch implementation emotional talking face generation prefesented in paper :[Talking Face Generation](https://github.com/UoA-CARES-Student/TalkingFaceGeneration-with-Emotion).
 
 ### Requirements
 -------------
@@ -22,6 +22,8 @@ This repository contains the pytorch implementation emotional talking face gener
 │   ├── model
 │   ├── data
 │   ├── DeepFaceLab
+│   ├── StyleGAN
+│   ├── dnnlib              # Helper functions for StyleGAN generator
 │   ├── filelists           # describe the directory of train & validation datasets
 │   ├── face_detection      # module used to crop face image
 │   ├── preprocess.py
@@ -39,7 +41,7 @@ This repository contains the pytorch implementation emotional talking face gener
 
 
 ### Documentation
-- [Training & Inference insturction README](./emofacegeneration/)
+- [Training & Inference insturction README](./TalkingFaceGeneration/)
 - [Evalutation README](./docs/evaluation/)
 
 

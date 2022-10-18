@@ -84,27 +84,28 @@ In addition, it is no longer aviable on PyPi.
 #### Then, please download the following weights:
 - https://drive.google.com/uc?id=1N2-m9qszOeVC9Tq77WxsLnuWwOedQiD2
 - https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ
-<br/>
-#### Place these weights into "stylegan/weights"
-<br/>
+<br><br/>
+Place these weights into "stylegan/weights"
+<br><br/>
 #### Then download the finetuned resnet weight from pbaylies listed below: 
 - https://drive.google.com/file/d/1EhaXKv2deh1l_R9mh1uebVyKkRvSXH3r/view
-<br/>
+
 Into "stylegan/data"
-## To modifiy images, first encode the images into lantent space, provide the directory of the target photo(s)
+#### To modifiy images, first encode the images into lantent space, provide the directory of the target photo(s)
+Using the following code:
 ```bash
 python image_encoder --src_dir [PATH_TO_DIR]
 ```
 
 After the images are encoded, use "emotion_inference.py" to alter your image's emotion, the --coeff argument takes in numberical inputs, where positive numbers point towards happy, whilst negative numbers point towards sad. 
-<br/>
+<br><br/>
 The --face_name argument takes in the target photo name that you want the emotion to be altered for. Only pass in the image name with no extension or path.
-<br/>
+<br><br/>
 For example, I want to alter an image I encoded called "demo1.jpg". I also want to change the face so a smile the command would be:
 ```bash
 python emotion_inference.py --face_name demo1 --coeff 0.7
 ```
-The generated result will be outtputed to faces/generated_img
+The generated result will be outtputed to "faces/generated_img"
 
-Thanks to the following repository for their implementation:
+#### Thanks to the following repository for their implementation:
 https://github.com/pbaylies/stylegan-encoder

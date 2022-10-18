@@ -88,12 +88,19 @@ class Wav2Lip(nn.Module):
         # audio_sequences = (B, T, 1, 80, 16)
         B = audio_sequences.size(0)
 
+        # print(f"forward: {face_sequences.size()}")
         input_dim_size = len(face_sequences.size())
         if input_dim_size > 4:
+            # print(f"Before : {audio_sequences.size()}  -- {face_sequences.size()}")
+            # Before : torch.Size([8, 5, 1, 80, 16])  -- torch.Size([8, 6, 5, 96, 96])
+            ## B = 8 * 5 ... 8 = batch_size, 5 is from syncnet_T
             audio_sequences = torch.cat([audio_sequences[:, i] for i in range(audio_sequences.size(1))], dim=0)
             face_sequences = torch.cat([face_sequences[:, :, i] for i in range(face_sequences.size(2))], dim=0)
+            # print(f"After : {audio_sequences.size()}  -- {face_sequences.size()}")
+            # After : torch.Size([B, 1, 80, 16])  -- torch.Size([B, 6, 96, 96])
 
         audio_embedding = self.audio_encoder(audio_sequences) # B, 512, 1, 1
+        # print(audio_embedding.size())
 
         feats = []
         x = face_sequences
@@ -105,7 +112,9 @@ class Wav2Lip(nn.Module):
         for f in self.face_decoder_blocks:
             x = f(x)
             try:
+                # print(f"Before: {x.size()}")
                 x = torch.cat((x, feats[-1]), dim=1)
+                # print(f"After: {x.size()}")
             except Exception as e:
                 print(x.size())
                 print(feats[-1].size())
@@ -114,14 +123,15 @@ class Wav2Lip(nn.Module):
             feats.pop()
 
         x = self.output_block(x)
-
+        # print(f"x shape {x.size()}")
         if input_dim_size > 4:
             x = torch.split(x, B, dim=0) # [(B, C, H, W)]
             outputs = torch.stack(x, dim=2) # (B, C, T, H, W)
 
         else:
             outputs = x
-            
+        
+        # print(f"output shape {outputs.size()}")
         return outputs
 
 class Wav2Lip_disc_qual(nn.Module):

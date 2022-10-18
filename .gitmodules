@@ -1,0 +1,3 @@
+[submodule "emofacegeneration/DeepFaceLab"]
+	path = emofacegeneration/DeepFaceLab
+	url = https://github.com/iperov/DeepFaceLab.git

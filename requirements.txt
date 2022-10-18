@@ -10,5 +10,5 @@ scikit-image==0.17.2
 dlib
 requests
 imutils
-wandb
+wandb==0.12.20
 nvidia-pyindex

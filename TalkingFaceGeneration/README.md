@@ -68,3 +68,15 @@ To use deepfacelab, simply follow the instruction provided below.
 - [Main guide](https://mrdeepfakes.com/forums/thread-guide-deepfacelab-2-0-guide)
     (Specifically, I used scripts found in [DeepFaceLab_Linux](https://github.com/nagadit/DeepFaceLab_Linux) repository.)
 - [Google Colab notebook](https://colab.research.google.com/github/chervonij/DFL-Colab/blob/master/DFL_Colab.ipynb)
+
+##StyleGAN emotion modifier
+To modifiy images, first encode the images into lantent space, provide the directory of the target photo(s)
+```bash
+python image_encoder --src_dir [PATH_TO_DIR]
+```
+
+After the images are encoded, use "emotion_inference.py" to alter your image's emotion, the --coeff argument takes in numberical inputs, where positive numbers point towards happy, whilst negative numbers point towards sad. the --face_name argument takes in the target photo name that you want the emotion to be altered for. Only pass in the image name with no extension or path.
+For example, I want to alter an image I encoded called "demo1.jpg". I also want to change the face so a smile the command would be:
+```bash
+python emotion_inference.py --face_name demo1 --coeff 0.7
+```

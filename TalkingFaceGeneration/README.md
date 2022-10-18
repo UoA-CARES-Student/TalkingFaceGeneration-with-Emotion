@@ -80,3 +80,7 @@ For example, I want to alter an image I encoded called "demo1.jpg". I also want 
 ```bash
 python emotion_inference.py --face_name demo1 --coeff 0.7
 ```
+
+
+Thanks to the following repository for their implementation:
+https://github.com/pbaylies/stylegan-encoder

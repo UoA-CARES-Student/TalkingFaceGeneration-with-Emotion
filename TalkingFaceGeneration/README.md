@@ -70,6 +70,23 @@ To use deepfacelab, simply follow the instruction provided below.
 - [Google Colab notebook](https://colab.research.google.com/github/chervonij/DFL-Colab/blob/master/DFL_Colab.ipynb)
 
 ##StyleGAN emotion modifier
+First to download the required dependencies, run these commands in the following order:
+<br/>
+pip install tensorflow-gpu
+<br/>
+pip install tensorflow[horovod] 
+<br/>
+pip install tensorboard==2.10.0
+<br/>
+This is due to tensorflow 1 now being depcrated, and for many environments, no longer avaiable or downloadable 
+https://stackoverflow.com/questions/73215696/did-colab-suspend-tensorflow-1-x
+In addition, it is no longer aviable on PyPi.
+
+Then, please download the following weights:
+https://drive.google.com/uc?id=1N2-m9qszOeVC9Tq77WxsLnuWwOedQiD2
+https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ
+Place these weights into "stylegan/weights"
+Into TalkingfaceGen
 To modifiy images, first encode the images into lantent space, provide the directory of the target photo(s)
 ```bash
 python image_encoder --src_dir [PATH_TO_DIR]

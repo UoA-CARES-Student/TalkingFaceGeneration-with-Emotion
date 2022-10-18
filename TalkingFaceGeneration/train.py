@@ -218,7 +218,7 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
     checkpoint_interval = n_steps_per_epoch
     eval_interval = n_steps_per_epoch
     #### END  ####
-
+    disc_wt = 0.01
     while global_epoch < nepochs:
         print('Starting Epoch: {}'.format(global_epoch))
         running_sync_loss, running_l1_loss, disc_loss, running_perceptual_loss = 0., 0., 0., 0.
@@ -227,6 +227,7 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
         for step, (x, indiv_mels, mel, gt) in prog_bar:
             disc.train()
             model.train()
+            disc_wt = 0.01 * global_epoch
 
             x = x.to(device)
             mel = mel.to(device)
@@ -244,15 +245,15 @@ def train(device, model, disc, train_data_loader, test_data_loader, optimizer, d
             else:
                 sync_loss = 0.
 
-            if hparams.disc_wt > 0.:
+            if disc_wt > 0.:
                 perceptual_loss = disc.perceptual_forward(g)
             else:
                 perceptual_loss = 0.
 
             l1loss = recon_loss(g, gt)
 
-            loss = hparams.syncnet_wt * sync_loss + hparams.disc_wt * perceptual_loss + \
-                                    (1. - hparams.syncnet_wt - hparams.disc_wt) * l1loss
+            loss = hparams.syncnet_wt * sync_loss + disc_wt * perceptual_loss + \
+                                    (1. - hparams.syncnet_wt - disc_wt) * l1loss
 
             loss.backward()
             optimizer.step()

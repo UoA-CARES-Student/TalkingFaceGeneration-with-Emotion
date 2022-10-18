@@ -6,6 +6,9 @@ Adopting the [Wav2Lip](https://github.com/Rudrabha/Wav2Lip) model, the addition 
 [Demo Colab notebook](https://colab.research.google.com/drive/1cvd_ZUBClHlsEx-9szI_zTqqKyHhQMzb?authuser=1#scrollTo=ryz7w34vUAOE)
 
 - Face detection [pre-trained model](https://www.adrianbulat.com/downloads/python-fan/s3fd-619a316812.pth) should be downloaded to `face_detection/detection/sfd/s3fd.pth`. 
+- Weights of the expert discriminator [pre-trained ,model](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/radrabha_m_research_iiit_ac_in/EQRvmiZg-HRAjvI6zqN9eTEBP74KefynCwPWVmF57l-AYA?e=ZRPHKP)
+- Weights of the visual disc trained in a GAN setup [pre-trained model](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/radrabha_m_research_iiit_ac_in/EQVqH88dTm1HjlK11eNba5gBbn15WMS0B0EZbDBttqrqkg?e=ic0ljo)
+- Spt-Wav2Lip [pre-trained model](https://drive.google.com/file/d/1OlkrrS-N-WrBAGnyg1fazE16kUU0ih1X/view?usp=sharing)
 
 ### Setting up the dataset
 Our model was trained using [VoxCeleb2](https://www.robots.ox.ac.uk/~vgg/data/voxceleb/vox2.html) dataset. 

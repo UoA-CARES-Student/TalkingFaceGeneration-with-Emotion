@@ -17,15 +17,19 @@ This repository contains the pytorch implementation emotional talking face gener
 ```
 .
 ├── docs                    # Documentation files
-│   └── evaluation.md
-├── emofacegeneration   # Source files
+│   └── evaluation.md       
+├── emofacegeneration       # Source files
 │   ├── model
 │   ├── data
-│   ├── utils
+│   ├── DeepFaceLab
+│   ├── filelists           # describe the directory of train & validation datasets
+│   ├── face_detection      # module used to crop face image
+│   ├── preprocess.py
 │   ├── train.py
-│   └── run.py
+│   └── inference.py
 ├── demo                    # demo notebooks
-│   └── SPT-Wav2Lip with Google TTS
+│   ├── DeepFaceLab.ipynb   # notebook for deepfacelab
+│   └── SPT-Wav2Lip.ipynb   # notebook for SPT-Wav2Lip with Google TTS
 ├── LICENSE
 ├── README.md
 └── requirement.txt 
@@ -35,7 +39,7 @@ This repository contains the pytorch implementation emotional talking face gener
 
 
 ### Documentation
-- [Intrustruction README](./emofacegeneration/)
+- [Training & Inference insturction README](./emofacegeneration/)
 - [Evalutation README](./docs/evaluation/)
 
 

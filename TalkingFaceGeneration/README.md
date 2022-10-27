@@ -77,7 +77,7 @@ To use deepfacelab, simply follow the instruction provided below.
 ## StyleGAN emotion modifier
 #### First to download the required dependencies, run these commands in the following order:
 - pip install tensorflow-gpu
-- pip install tensorflow[horovod] 
+- pip install nvidia-tensorflow[horovod] 
 - pip install tensorboard==2.10.0
 <br/>
 This is due to tensorflow 1 now being depcrated, and for many environments, no longer avaiable or downloadable 

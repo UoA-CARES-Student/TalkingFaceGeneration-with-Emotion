@@ -24,7 +24,7 @@ This repository contains the pytorch implementation emotional talking face gener
 .
 ├── docs                    # Documentation files
 │   └── evaluation.md
-├── emofacegeneration       # Source files
+├── TalkingFaceGeneration   # Source files
 │   ├── model
 │   ├── data
 │   ├── DeepFaceLab

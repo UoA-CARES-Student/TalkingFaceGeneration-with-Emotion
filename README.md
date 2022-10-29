@@ -1,23 +1,29 @@
 # TalkingFaceGeneration-with-Emotion:
+
+<p align='center'>
+  <img src='media/monalisa_gif.gif' width='80%'/>
+</p>
+
 <div style="text-align: right"> by <a href="https://github.com/LemonPepperSeasoning">Takahiro Ishiguro</a> and <a href="https://github.com/forestsky1">Alan lin</a></div>
 
-
 ### Introduction
-This repository contains the pytorch implementation emotional talking face generation prefesented in paper :[Talking Face Generation](https://github.com/UoA-CARES-Student/TalkingFaceGeneration-with-Emotion).
+
+This repository contains the pytorch implementation emotional talking face generation prefesented in paper : Emotional Talking Facial Video Generation using Single Image and Sentence.
 
 ### Requirements
--------------
-- `Python 3.6` 
+
+---
+
+- `Python 3.6`
 - ffmpeg: `sudo apt-get install ffmpeg`
 - Install necessary packages using `pip install -r requirements.txt`.
 
-
-
 ### Repository structure
+
 ```
 .
 ├── docs                    # Documentation files
-│   └── evaluation.md       
+│   └── evaluation.md
 ├── emofacegeneration       # Source files
 │   ├── model
 │   ├── data
@@ -34,20 +40,29 @@ This repository contains the pytorch implementation emotional talking face gener
 │   └── SPT-Wav2Lip.ipynb   # notebook for SPT-Wav2Lip with Google TTS
 ├── LICENSE
 ├── README.md
-└── requirement.txt 
+└── requirement.txt
 
 ```
-### Sample results
-
 
 ### Documentation
+
 - [Training & Inference insturction README](./TalkingFaceGeneration/)
 - [Evalutation README](./docs/evaluation/)
 
+### Sample results
+
+#### Image to Video
+
+<video src="media/image_to_video.mp4" width='60%'></video>
+
+#### Video to Video
+
+<video src="media/video_to_video.mp4" width='60%'></video>
 
 ### License and Citation
+
 EmoFaceGeneration is released under the [Apache 2.0 license](LICENSE).
 
 ### Acknowledgements
-Part of the code was adapted from the following projects:
-- [to be replaced with link to repo]
+
+This code borrows heavily from [Wav2Lip](), [StyleGAN]() and [DeepFaceLab](). We thank the authors for releasing their models and codebase. We also like to thank BBC for allowing us to use thier VoxCeleb2 dataset.

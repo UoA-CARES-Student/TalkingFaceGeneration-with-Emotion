@@ -53,11 +53,12 @@ This repository contains the pytorch implementation emotional talking face gener
 
 #### Image to Video
 
-<video src="media/image_to_video.mp4" width='60%'></video>
+<video src="https://user-images.githubusercontent.com/60628111/198815459-f98b1844-faf4-4dfe-bafe-10e3d8a78d0c.mp4
+" width='60%'></video>
 
 #### Video to Video
 
-<video src="media/video_to_video.mp4" width='60%'></video>
+<video src="https://user-images.githubusercontent.com/60628111/198815427-9745b0ac-b61c-4cf4-b20b-cfc8874fb167.mp4" width='60%'></video>
 
 ### License and Citation
 

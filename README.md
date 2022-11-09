@@ -1,4 +1,4 @@
-# TalkingFaceGeneration-with-Emotion:
+# Talking Face Generation with Emotion:
 
 <p align='center'>
   <img src='media/monalisa_gif.gif' width='80%'/>

@@ -18,8 +18,11 @@ python scripts/download_pretrained_models.py dlib (only for dlib face detector)
  ```bash
 python scripts/download_pretrained_models.py CodeFormer
 ```
-5. Run python basicsr/setup.py develop
-6. Back to main directory and run
+5. Run
+```bash
+python basicsr/setup.py develop
+```
+7. Back to main directory and run
  ```bash
 python generate_emotion.py -im ./input image path -m ./model/
 ```

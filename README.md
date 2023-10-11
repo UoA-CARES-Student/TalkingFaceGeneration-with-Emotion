@@ -1,5 +1,5 @@
 # TalkingFaceGeneration-with-Emotion
-README file for emotion generator.
+Emotion generator generates emotional images(Happy, Disgusted and Neutral) from any single input image(recommend to use no background portrait).
 
 ## Installation
 ```bash

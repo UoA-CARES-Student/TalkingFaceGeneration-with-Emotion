@@ -22,7 +22,7 @@ python scripts/download_pretrained_models.py CodeFormer
 ```bash
 python basicsr/setup.py develop
 ```
-7. Back to main directory and run
+7. Back to main directory and run(default image is Anne)
  ```bash
 python generate_emotion.py -im ./input image path -m ./model/
 ```

@@ -6,7 +6,27 @@ README file for emotion generator.
 pip install -r requirements.txt
 ```
 
-## Preparation
+## Test with pre-trained model
+1. If you want to use pre-trained model download [pretrained_model](https://drive.google.com/drive/folders/10lDoeIq_68FRFvQEXD4LFjU_JhK1q2Xi?usp=sharing) and put into model folder
+2. Locate to CodeFormer
+3. Download the facelib and dlib pretrained models to the weights/facelib folder
+ ```bash
+python scripts/download_pretrained_models.py facelib
+python scripts/download_pretrained_models.py dlib (only for dlib face detector)
+```
+4. Download the CodeFormer pretrained models to the weights/CodeFormer folder.
+ ```bash
+python scripts/download_pretrained_models.py CodeFormer
+```
+5. Run python basicsr/setup.py develop
+6. Back to main directory and run
+ ```bash
+python generate_emotion.py -im ./input image path -m ./model/
+```
+
+You will get emotional images in result folder.
+
+## Preparation for training
 This emotion generator uses CREMA-D dataset.
 
 1. Download dataset here [dataset](https://github.com/CheyneyComputerScience/CREMA-D) to download dataset
@@ -21,14 +41,6 @@ python /data_prep/convertFPS.py -i raw_video_folder -o /output_folder
 python /data_prep/prepare_data.py -i 25_fps_video_folder/ -o /output_folder --mode 1 --nw 1
 ```
 
-
-If you want to use pre-trained model download [pretrained_model](https://drive.google.com/drive/folders/10lDoeIq_68FRFvQEXD4LFjU_JhK1q2Xi?usp=sharing) and put into model folder
-
-## Test
-
-```bash
-python generate_emotion.py -m ./model/
-```
 
 ## Train
 

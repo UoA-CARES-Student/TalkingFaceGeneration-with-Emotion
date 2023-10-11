@@ -4,6 +4,7 @@ import os
 import random as rn
 import shutil
 import subprocess
+import time
 
 import h5py
 import librosa
@@ -93,6 +94,7 @@ parser.add_argument("--gpu", type=str, help="GPU index", default="1")
 args = parser.parse_args()
 
 file_path1 = 'get_frames.py'
+file_path2 = 'inference_codeformer.py'
 
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
@@ -234,4 +236,6 @@ with torch.no_grad():
         utils.write_video_cv(frame_list[:-args.offset, ...], speech[0, 0, :int(-args.offset*args.increment)], sr, output_path, emotion_dict[emo_i]+'_generated.mp4', args.fps)
 
 execute_python_file(file_path1)
+time.sleep(3)
+execute_python_file(file_path2)
 

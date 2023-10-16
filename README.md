@@ -1,12 +1,9 @@
 # TalkingFaceGeneration-with-Emotion
-<div style="overflow: hidden;">
-    <div style="float: left; width: 50%;">
-        <img src='media/anne.gif' width='100%'/>
-    </div>
-    <div style="float: right; width: 50%;">
-        <img src='media/scalett.gif' width='100%'/>
-    </div>
+<div style="text-align: center;">
+  <img src='media/anne.gif' style="width: 50%; display: inline-block;"/>
+  <img src='media/scalett.gif' style="width: 50%; display: inline-block;"/>
 </div>
+
 
 
 ### Introduction

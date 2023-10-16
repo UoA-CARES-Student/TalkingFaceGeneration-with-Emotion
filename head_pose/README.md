@@ -33,5 +33,3 @@ python run_demo.py --s_path ./data/s.mp4 \
 		--face pose \
 		--output_folder ./res
 ```
-
-## Acknowledgments 

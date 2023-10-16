@@ -34,5 +34,3 @@ Google colab demo already includes downloading and extracting checkpoints
                     --use_DAIN \  # for temporal inference, but will take much longer time 
              		--time_step 0.5 #Frame insertion frequency, default 0.5
 ```
-
-## Acknowledgments 

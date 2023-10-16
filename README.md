@@ -1,4 +1,4 @@
-# TalkingFaceGeneration-with-Emotion
+# TalkingFaceGeneration-with-Emotion                                         
 Emotion generator generates emotional images(Happy, Disgusted and Neutral) from any single input image(recommend to use no background portrait).
 
 ## Installation
@@ -7,6 +7,8 @@ pip install -r requirements.txt
 ```
 
 ## Test with pre-trained model
+#Use Emotion_generator.ipynb to run in google colab and test
+OR 
 1. If you want to use pre-trained model download [pretrained_model](https://drive.google.com/drive/folders/10lDoeIq_68FRFvQEXD4LFjU_JhK1q2Xi?usp=sharing) and put into model folder or
  ```bash
 !gdown https://drive.google.com/uc?id=1xiKfABPX0heyTKvrTBnWTmix2e7KB5rJ&export=download

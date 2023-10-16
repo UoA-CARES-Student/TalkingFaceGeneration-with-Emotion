@@ -1,1 +1,0 @@
-PLease place the downloaded finetuned_resnet.h5 file here

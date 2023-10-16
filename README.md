@@ -14,9 +14,9 @@ There are two ipynb files to test step1-step5 and generate emotional talking fac
 ```
 2.TTS&Lip_sync&head_pose.ipynb
 ```
-```bash
+
 Follow the instruction in ipynb files
-```
+
 ### Step-by-step system
 1.	Emotional Face Image Generation: A target facial image and emotion are input to produce an emotional image. 
 

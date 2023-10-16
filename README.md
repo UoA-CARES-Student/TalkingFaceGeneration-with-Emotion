@@ -7,9 +7,13 @@ pip install -r requirements.txt
 ```
 
 ## Test with pre-trained model
-1. If you want to use pre-trained model download [pretrained_model](https://drive.google.com/drive/folders/10lDoeIq_68FRFvQEXD4LFjU_JhK1q2Xi?usp=sharing) and put into model folder
-2. Locate to CodeFormer
-3. Download the facelib and dlib pretrained models to the weights/facelib folder
+1. If you want to use pre-trained model download [pretrained_model](https://drive.google.com/drive/folders/10lDoeIq_68FRFvQEXD4LFjU_JhK1q2Xi?usp=sharing) and put into model folder or
+ ```bash
+!gdown https://drive.google.com/uc?id=1xiKfABPX0heyTKvrTBnWTmix2e7KB5rJ&export=download
+!unzip model.zip
+```
+3. Locate to CodeFormer
+4. Download the facelib and dlib pretrained models to the weights/facelib folder
  ```bash
 python scripts/download_pretrained_models.py facelib
 python scripts/download_pretrained_models.py dlib (only for dlib face detector)

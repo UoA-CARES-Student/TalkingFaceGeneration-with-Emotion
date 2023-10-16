@@ -18,3 +18,5 @@ All the files and instructions how to run head pose implementation are under "he
 ## Integration of Lip synchronisation and Head pose implementation
 Run "lip_headpose.ipynb".
 
+## Evaluation 
+Run "lipSync_evaluation.ipynb" to run PSNR, MSE, SSIM and FID metrics. 

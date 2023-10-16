@@ -1,1 +1,0 @@
-Place the downloaded generator and perceptual weights here

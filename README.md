@@ -1,10 +1,13 @@
 # TalkingFaceGeneration-with-Emotion
-<p align='left'>
-  <img src='media/anne.gif', 'media/scalett.gif' width='50%'/>
-</p>
-<p align='right'>
-  <img src='media/scalett.gif' width='50%'/>
-</p>
+<div style="overflow: hidden;">
+    <div style="float: left; width: 50%;">
+        <img src='media/anne.gif' width='100%'/>
+    </div>
+    <div style="float: right; width: 50%;">
+        <img src='media/scalett.gif' width='100%'/>
+    </div>
+</div>
+
 
 ### Introduction
 This repository contains the colab files to test overall system with implementation emotional talking face generation : Emotional Talking Facial Video Generation using Single Image and Sentence.

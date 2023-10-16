@@ -1,7 +1,7 @@
 # TalkingFaceGeneration-with-Emotion
 <div style="display: flex; justify-content: center;">
-  <img src='media/anne.gif' style="width: 150%;"/>
-  <img src='media/scalett.gif' style="width: 150%;"/>
+  <img src='media/anne.gif' style="width: 3000%;"/>
+  <img src='media/scalett.gif' style="width: 3000%;"/>
 </div>
 
 ### Introduction

@@ -1,9 +1,9 @@
 # TalkingFaceGeneration-with-Emotion
 <p align='left'>
-  <img src='media/anne.gif' width='30%'/>
+  <img src='media/anne.gif' width='50%'/>
 </p>
 <p align='right'>
-  <img src='media/scalett.gif' width='30%'/>
+  <img src='media/scalett.gif' width='50%'/>
 </p>
 
 ### Introduction

@@ -7,7 +7,7 @@ Before executing lip synchronisation from an output image of emotion generator, 
 
 2. Image to Video: Lip synchronisation generator takes a video as an input, whereas the output of the image generator is an image. Therefore, image to video conversion is needed.
 
-These steps can be achieved by running preprocessing_pasteback_vid.ipynb 
+These steps can be achieved by running "preprocessing_pasteback_vid.ipynb".
 
 ## Lip synchronisation 
 All the files and instructions how to run lip synchronisation are under "lip_synchronisation" folder. 
